@@ -1,0 +1,106 @@
+<div ng-init="poiCtrl.initMap()"></div>
+<!--<div ng-init="poiCtrl.initFav()"></div>-->
+<div ng-init="poiCtrl.showFavorites()"></div>
+<p>Sort by:
+                <select name="wantedSort"  ng-model="wantedSort">
+                        <option value="category">category</option>
+                        <option value="-rank">rank</option>
+                </select>
+</p>
+<p >Choose category to filter by :
+                <select  ng-options="category for category in poiCtrl.categories" ng-model="poiCtrl.categoryToFilter" ng-change="poiCtrl.filter()">
+                </select>
+</p> 
+<table>
+                <tr ng-repeat="poi in $root.pois | filter : poiCtrl.filterFunc | orderBy : wantedSort">
+            <!--    <td>
+                        <button ng-click="poiCtrl.selectedCity(id)"> add city</button>
+                </td>
+                <td>
+                        <!-- with radio button we would like one data model for each option 
+                        <input type="radio"  value="{{city.name}}_{{id}}" ng-model="poiCtrl.selected">
+                </td>
+        -->
+                <td>
+                        Poi name:
+                       <a ng-click="poiCtrl.getPOIDet(poi.name)"> {{poi.name}}</a>
+                       <div ng-show="$root.userName!='guest' && $root.favBool[poi.name]==='remove from favoites'">
+                                <img src= "data:image/jpeg;base64,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" width="=30px" height="30px">
+                        </div>
+                       
+                        
+                       <br>  
+                       <a>  
+                       <img ng-click="poiCtrl.getPOIDet(poi.name)" ng-style="{'height': '100px'}" ng-src="{{poi.image}} ">
+                       </a>
+
+                       <div ng-show="poiCtrl.boolMap[poi.name]">
+                         views:
+                         {{poi.views+1}}
+                        <br> 
+                       Description:
+                        <span >{{poi.description}}</span>
+                        <br>
+                        Rank:
+                        {{poi.rank}}
+                        <br>
+                        feedbacks:
+                        <br>
+                        <span >{{poi.feedback1}}</span>,  <span >{{poi.date1}}</span>
+                        <br>
+                        <span >{{poi.feedback2}}</span>,  <span >{{poi.date2}}</span>
+                        <br>
+                       </div>
+                </td>
+                <td>
+                          <button ng-click="poiCtrl.addToFav(poi)" ng-show="$root.userName!='guest'">{{$root.favBool[poi.name]}}</button>
+                </td>
+                <td>
+                                <button ng-click="poiCtrl.rank(poi.name)"  ng-show="$root.userName!='guest'">rank</button>
+                      </td>
+                     <!--   City name:
+                        <span ng-bind="city.name"></span>
+                        <br> City state:
+                        <span ng-bind="city.state"></span>
+                        <br>
+                        <img ng-style="{'height': '100px'}" " ng-src="{{pois.image}} ">
+                          -->    
+                     
+                                <!-- with input we would like to have for each option it's own input -->
+                                <!-- <input type="text " value="{{city.name}}_{{id}} " ng-model="poiCtrl.amount[id] " > 
+                                <input type="text " value="{{city.name}}_{{id}} " ng-model="poiCtrl.amount[id] " >
+                                <button ng-click="poiCtrl.addToCart(id, city) ">add</button>-->
+                           
+         </tr>
+                                  
+                
+
+                
+    
+        
+</table>
+
+<div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <p>Rank {{poiCtrl.currRank}}</p>
+                  Rank: 
+                  <select name="selectedRank" ng-model="selectedRank">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select>
+                  <br>        
+                  Your feedback: 
+                  <br>     
+                  <input type="text" ng-model="feedback"  style="width:60%; height:20%;" >
+                  <br>
+                  <button id="regBut" ng-click="poiCtrl.rankPoi()">rank</button>
+                </div>
+              
+</div>
+     

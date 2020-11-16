@@ -1,0 +1,261 @@
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"> -->
+        <!-- <script src="http://www.google.com/jsapi?fake=.js"></script> -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css"/>
+     
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
+    
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </head>
+    <br>
+    <center>
+        <div id="loader" class="loader" ng-hide="srchCtrl.loaded"></div>
+    </center>
+    <div ng-init="srchCtrl.getStates()"></div>
+    <div ng-show="srchCtrl.loaded && $root.states.length>0">
+    <!-- <div id="page"  ng-show="$root.states.length>0"> -->
+    <!-- <div class="row"> -->
+    <!-- <form class="form-inline" ng-show="$root.states.length>0" style="max-height: 50% !important; max-width: 100% !important;"> -->
+        <!-- <div id="startsDiv">    -->
+                        <!-- <div class="col-3"> -->
+                                <span ng-show="$root.states.length>0" style="text-align: center; font-size: 14px;font-weight: bold;color: #777;position: absolute; top: 12%; left:8% ;">Starts With </span>
+        <div id="startsDiv">
+        <table id="starts" class="table table-striped table-bordered table-sm" cellspacing="0">
+                <!-- <caption style="text-align: center; font-size: 14px;font-weight: bold;">Starts With</caption> -->
+                <thead>
+                        <tr>
+                                <th><input type="checkbox" class="form-check-input" ng-model="allStartsItemsSelected"
+                                                ng-change="selectAllStarts()" checked="true" checked>State</th>
+                                <!-- <th>ID</th> -->
+                                <th>Name</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr ng-repeat="state in srchCtrl.states" ng-init="$last && srchCtrl.loadStarts()">
+                                <td>
+                                        <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1" ng-model="state.isStartsChecked" ng-change="StartsSelect()" checked>
+                                        </div>
+                                </td>
+                                <!-- <td>{{state.id}}</td> -->
+                                <td>{{state.name}}</td>
+                        </tr>
+                </tbody>
+        </table>
+        </div> 
+        <span ng-show="$root.states.length>0" style="text-align: center; font-size: 14px;font-weight: bold;color: #777;position: absolute; top: 12%; left:32% ;">Contains </span>
+        <div id="containsDiv"> 
+        <table class="table table-striped table-bordered table-sm" id="contains">
+                <!-- <caption style="text-align: center; font-size: 14px;font-weight: bold;">Contains</caption> -->
+                <thead>
+                        <tr>
+                                <th scope="col"><input type="checkbox" class="form-check-input"
+                                                ng-model="allContainsItemsSelected" ng-change="selectAllContains()">State</th>
+                                <!-- <th scope="col">ID</th> -->
+                                <th scope="col">Name</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr ng-repeat="state in srchCtrl.states" ng-init="$last && srchCtrl.loadContains()">
+                                <td>
+                                        <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1" ng-model="state.isContainsChecked" ng-change="ContainsSelect()" checked>
+                                        </div>
+                                </td>
+                                <!-- <td>{{state.id}}</td> -->
+                                <td>{{state.name}}</td>
+                        </tr>
+                </tbody>
+        </table>
+        </div>
+        <span ng-show="$root.states.length>0" style="text-align: center; font-size: 14px;font-weight: bold;color: #777;position: absolute; top: 12%; left:54% ;">Ends With </span>
+        <div id="endsDiv">
+        <table class="table table-striped table-bordered table-sm" id="ends">
+                <!-- <caption style="text-align: center; font-size: 14px;font-weight: bold;">Ends With</caption> -->
+                <thead>
+                        <tr>
+                                <th scope="col"><input type="checkbox" class="form-check-input"
+                                                ng-model="allEndsItemsSelected" ng-change="selectAllEnds()">State</th>
+                                <!-- <th scope="col">ID</th> -->
+                                <th scope="col">Name</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr ng-repeat="state in srchCtrl.states" ng-init="$last && srchCtrl.loadEnds()">
+                                <td>
+                                        <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1" ng-model="state.isEndsChecked" ng-change="EndsSelect()">
+                                        </div>
+                                </td>
+                                <!-- <td>{{state.id}}</td> -->
+                                <td>{{state.name}}</td>
+                        </tr>
+                </tbody>
+        </table>
+        </div>
+        <div id="extendSearch">
+                        <!-- <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1" ng-model="limitHSValue" ng-change="limitHS()">Limit H.S
+                                </div> -->
+                                <!-- <form name="HSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important;"> -->
+                              <table>
+                                      <tr style="padding: 1%;">
+                                        <td style="width: 5%;">
+                                                
+                                              </td>
+                                              <td style="width: 25%;">
+                                                Limit M.H.S
+                                              </td>
+                                              <td style="width: 25%;">
+                                                Limit V.S
+                                              </td>
+                                              <td style="width: 30%;">
+                                                Limit TIRP Size
+                                              </td>
+                                      </tr>
+                                      <tr style="padding: 0px !important; margin: 0px !important;">
+                                        <td style="padding: 0px !important; margin: 0px !important;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important; padding-bottom: 1px !important;margin: 0px !important;">
+                                                        min
+                                                </form>
+                                                
+                                        </td>
+                                        <td style="width: 20%;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important; margin: 0px !important;">
+                                                <!-- <label for="minHS" id="weight1lbl">From</label> -->
+                                                <input type="number"  id="minHS" name="minHS" ng-model="minHS" class="form-control"  ng-blur="checkMinValue('HS')"
+                                                     min="1" value=1 style="padding: 3px !important; height: 70% !important; width: 50% !important;">
+                                                </form>        
+                                        </td>
+                                        <td style="width: 20%;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important; margin: 0px !important;">
+                                                <!-- <label for="minVS" id="weight1lbl">From</label> -->
+                                                <input type="number"  id="minVS" name="minVS" ng-model="minVS" class="form-control" ng-blur="checkMinValue('VS')"
+                                                     min="$root.selcetedDataSet.min_ver_support" style="padding: 3px !important; height: 70% !important; width: 50% !important;margin-right: 0px !important;">%
+                                                        </form>
+                                        </td>
+                                        <td style="width: 20%;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important;margin: 0px !important; ">
+                                                <!-- <label for="minSize" id="weight1lbl">From</label> -->
+                                                <input type="number"  id="minSize" name="minSize" ng-model="minSize" class="form-control" ng-blur="checkMinValue('size')"
+                                                 min="1" style="padding: 3px !important; height: 70% !important; width: 50% !important;margin-right: 0px !important;">
+                                                   </form>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                            <td style="padding: 0px !important; margin: 0px !important;">
+                                                    <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important; padding-bottom: 1px !important;margin: 0px !important;">
+                                                            max
+                                                    </form>
+                                                    
+                                            </td>
+                                              <td style="width: 20%;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important; margin: 0px !important;">
+                                                <!-- <label for="maxHS" id="weight1lbl">To</label> -->
+                                                <input type="number"  id="maxHS" name="maxHS" ng-model="maxHS" class="form-control"  ng-blur="checkMaxValue('HS')"
+                                                     min="1" required style="padding: 3px !important; height: 70% !important; width: 50% !important;"> 
+                                                    </form>
+                                              </td>
+                                              <td style="width: 20%;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important; margin: 0px !important;">
+                                                <!-- <label for="maxVS" id="weight1lbl" style="padding-left: 5px !important;">To</label> -->
+                                                <input type="number"  id="maxVS" name="maxVS" ng-model="maxVS" class="form-control" ng-blur="checkMaxValue('VS')"
+                                                     max="100" required  style="padding: 3px !important; height: 70% !important; width: 50% !important; padding-right: 0px !important; margin-right: 0px !important;">%
+                                                     </form> 
+                                              </td>
+                                              <td style="width: 20%; max-height: 5% !important; margin: unset !important;">
+                                                <form name="VSForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important;margin: 0px !important;">
+                                                <!-- <label for="maxSize" id="weight1lbl" style="padding-left: 5px !important;">To</label> -->
+                                                <input type="number"  id="maxSize" name="maxSize" ng-model="maxSize" class="form-control" ng-blur="checkMaxValue('size')"
+                                                     min="1" required style="padding: 3px !important; height: 50% !important; width: 50% !important; padding-right: 0px !important; margin-right: 0px !important;">
+                                                    </form>   
+                                              </td>
+                                      </tr>
+                              </table>
+                              <button ng-click="search()" id="submit"
+                              name="submit" class="btn btn-primary" style="position: relative !important; left: 40% !important;padding: 5px !important; height: 70% !important;">Search</button>
+                      </div>
+                      <div ng-show="srchCtrl.final_results.length>0">
+                    </div>                        
+    <div id="chartContainer" style=" position:absolute ;top: 45%; left: 3%; width: 50%; height: 50%;"></div> 
+    <!-- <div id="resultsDiv" style="overflow: hidden !important;"> -->
+        <span ng-show="srchCtrl.currTirp != undefined" style="position: absolute; top: 53%;left: 70%; text-align: center; font-size: 16px;font-weight: bold;padding-bottom: 8% !important; color: #777777">Mean Presentation - TIRP #{{srchCtrl.currTirp.id.substring(0,srchCtrl.currTirp.id.length-1)}}</span>
+        <!-- <span ng-show="srchCtrl.currTirp != undefined" style="position: absolute; top: 53%;left: 80%; text-align: center; font-size: 16px;font-weight: bold;padding-bottom: 8% !important; color: #777777">TIRP #{{srchCtrl.currTirp.id.substring(0,srchCtrl.currTirp.id.length-1)}}</span> -->
+        <span id="currTirpDetails" ng-show="srchCtrl.currTirp != undefined" style="position: absolute; top: 56%;left: 71%; text-align: center; font-size: 12px;font-weight: bold;padding-bottom: 8% !important; color: #777777"></span>
+    <button ng-click="findTirp()" id="submit" ng-show="srchCtrl.currTirp != undefined"
+    name="submit" class="btn btn-primary" style="position: absolute !important; left: 77% !important;top: 45%; padding: 5px !important;">Explore TIRP</button>
+    <div id="timeline" ng-show="srchCtrl.currTirp != undefined"  style="width: 26%;height: 37% !important; position: absolute; top: 62%; left: 69%;"></div>
+    <!-- </div> -->
+    </div>
+    </div>
+</div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 
+    
+    
+    
+    <table id="statesToSearch" style="width:70%; table-layout:fixed" class="table table-striped table-bordered table-sm">
+    <thead>
+            <tr>
+                    <th class="th-sm"></th>
+                    <th class="th-sm">Starts By</th>
+                    <th class="th-sm">Contains</th>
+                    <th class="th-sm">Finish By</th>
+            </tr>
+    </thead>
+    <tbody>
+            <tr ng-repeat="states in $root.states">
+                    <td class="cell100 column1">
+                            {{dataSet.data_set_name}}
+                    </td>
+                    <td class="cell100 column1">
+                            {{dataSet.username}}
+                    </td>
+                    <td class="cell100 column1">
+                            {{dataSet.comments}}
+                    </td>
+                    <td class="cell100 column1">
+                            <button class="edit" ng-style="{'font-size': '1px'}"
+                                    ng-click="homeCtrl.edit(dataSet,this)">
+                                    <p class="download"><i class="material-icons"
+                                                    ng-style="{'font-size': '35px'}">edit</i><br />
+                                    </p>
+                            </button>
+                    </td>
+            </tr>
+    </tbody>
+    </table> -->

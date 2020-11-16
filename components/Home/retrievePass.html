@@ -1,0 +1,14 @@
+<label for="userName" id="userNamelbl">User Name:</label>
+<input type="text" name="username" ng-model="username" >
+   <br>
+<label for="Q1" id="q1lbl">Security Question no 1:</label>
+   <select ng-model="selectedQ1" ng-options="question for question in retrieveCtrl.questions"></select>
+   <br>
+   <label for="A1" id="a1lbl">Security answer no 1:</label>
+   <input type="text" name="A1" ng-model="A1" required  >
+   <br>
+
+   <button ng-click="retrieveCtrl.ret()"> retrieve password</button>
+   <br>
+   <br>
+   Your password is: {{retrieveCtrl.retPass}}

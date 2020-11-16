@@ -1,0 +1,160 @@
+<!-- analCtrl -->
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+        <style>
+                .container {
+                        position: absolute;                        
+                        top: 170px;
+                        left: 10px;
+                        width: 20%;
+                }
+
+                .chcklistContainer{
+                        position: absolute;
+                        top: 250px;
+                        left: 10px;
+                        width: 20%;    
+                }
+                .lbl {
+                        font-size: 120%;
+                        font-weight: bold;
+                }
+                #select {
+                        width: 100%;                          
+                }
+                #xAxisBounds{
+                        position: absolute;
+                        top: 550px;
+                        left: 2%;
+                        width: 17%;
+                        height: 10%;
+                }
+                #my_histogram {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        width: 80%;
+                        height: 80%
+                }
+                #my_classesBarChart{
+                        position: absolute;
+                        right: 0;
+                        bottom: 40%;
+                        width: 80%;
+                        height: 40%
+
+                }
+                #numTextBoxMin{
+                        position: absolute;
+                        top: 0;
+                        right:0;
+                        width: 30%;
+                        height: 45%;                       
+                }
+                #numTextBoxMax{
+                        position: absolute;
+                        top: 35px;
+                        right:0;
+                        width: 30%;
+                        height: 45%;
+                        
+                }
+                #lblTextBoxMin{
+                        position: absolute;
+                        top: 0;
+                        left:0;
+                        height: 40%;    
+                }
+                #lblTextBoxMax{
+                        position: absolute;
+                        top: 35px;
+                        left: 0;    
+                        height: 40%;
+                }
+                #cb {
+                        position: absolute;
+                        left: 20%;
+                        margin: 8px 8px 5px 5px;
+
+                        transform: scale(1.5);
+                }
+                #cbTd {
+                        position: absolute;
+                        left: 20%;
+                        margin: 8px 8px 5px 5px;
+
+                        transform: scale(1.5);     
+                }
+                #checkboxtext{
+                        position: absolute;
+                        left: 30%;
+                        font-size: 100%;
+                        font-weight: bold;
+                }
+                #classesColor{
+                        position: absolute;
+                        top: 100px;
+                        left: 10px;
+                        width: 20%;                   
+                }
+        </style>
+</head>
+<center onResize="refresh()" ng-init="analCtrl.init()">
+        <div id="loader" class="loader" ng-hide="analCtrl.loaded"></div>
+        <div id="RawDataAnalysis">
+                <div class="container" ng-init="analCtrl.getPropToBar()">
+                        <label for="Properties" class="lbl">Properties</label>
+                        <select id="select" class="form-control" ng-model="selectedProp" ng-change="analCtrl.displayPropChart()">
+                                <option ng-repeat="(header, value) in analCtrl.propBar">{{value}}</option>  
+                        </select><br>
+                </div>
+                <div class="chcklistContainer">
+                        <label for="Discretization" class="lbl">Discretization Bounds</label><br>
+                        <form id="cbf" action="/action_page.php" method="get" >
+                                <input id="cb" type="checkbox" value="equal-width" ng-model="EW" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#000000' id="checkboxtext" > Equal width</font></input><br>
+                                <input id="cb" type="checkbox" value="equal-frequency" ng-model="EF" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#DF013A' id="checkboxtext"> Equal frequency</font></input><br>
+                                <input id="cb" type="checkbox" value="sax" ng-model="sax" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#FF00BF' id="checkboxtext"> Sax</font><br></input>
+                                <input id="cb" type="checkbox" value="persist" ng-model="persist" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#0101DF' id="checkboxtext"> Persist</font><br></input>
+                                <input id="cbTd" type="checkbox" value="td4c-cosine" ng-model="td4cCosine" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#2ECCFA' id="checkboxtext"> TD4C-cosine</font><br></input>
+                                <input id="cbTd" type="checkbox" value="td4c-entropy" ng-model="td4cEntropy" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#00FF00' id="checkboxtext"> TD4C-entropy</font><br></input>
+                                <input id="cbTd" type="checkbox" value="td4c-entropy-ig" ng-model="td4cEntropyIg" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#31B404' id="checkboxtext"> TD4C-entropy-ig</font><br></input>
+                                <input id="cbTd" type="checkbox" value="td4c-skl" ng-model="td4cSkl" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#FF8000' id="checkboxtext"> TD4C-skl</font><br></input>
+                                <input id="cbTd" type="checkbox" value="td4c-diffsum" ng-model="td4cDiffsum" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#FF0000' id="checkboxtext"> TD4C-diffsum</font><br></input>
+                                <input id="cbTd" type="checkbox" value="td4c-diffmax" ng-model="td4cDiffmax" ng-change="analCtrl.displayPropChart()">
+                                        <font color='#8A0808' id="checkboxtext" > TD4C-diffmax</font><br></input>
+                        </form>
+                </div>
+                <div id = classesColor style="line-height:90%;">
+                        <label id="classLabel" class="lbl">Classes:</label><br>
+                        <label id="class0" style="font-weight: bold;"><font color='#737373' ></font></label><br>
+                        <label id="class1" style="font-weight: bold;"><font color='#33ccff' ></font></label>
+                </div>
+                <div id="xAxisBounds" class="form-inline">
+                        <label id="lblTextBoxMin" style="font-weight: bold;">X Axis Min Value: </label>
+                        <input id="numTextBoxMin" type="number" class="form-control" value="0" ng-model="xMinVal" ng-blur="analCtrl.displayPropChart()"></input><br>
+                        <label id="lblTextBoxMax" style="font-weight: bold;">X Axis Max Value: </label>
+                        <input id="numTextBoxMax" type="number" class="form-control" ng-model="xMaxVal" ng-blur="analCtrl.displayPropChart()"></input>
+                </div>
+                <div id="my_classesBarChart"></div>  
+                <div id="my_histogram"></div>
+                             
+        </div>
+        
+
+</center>
+
+
+
+
+  

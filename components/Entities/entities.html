@@ -1,0 +1,29 @@
+<!-- <div ng-controller="entitiesController as entCtrl"> -->
+        <head>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        </head>
+<center>
+        <br>
+<div id="loader" class="loader" ng-hide="$root.states.length>0 && entCtrl.loaded"></div>
+<div ng-init="entCtrl.getEntities()"></div>
+        <div id="dataTableDiv">
+            <table id="entitiesTbl" class="table table-striped table-bordered table-sm" cellspacing="0">
+            <thead>
+                <tr>
+                        <th class="th-sm" ng-repeat="(header, value) in $root.entities[0]">
+                                {{header}}
+                        </th>
+                </tr>
+            </thead>
+              <tbody>
+                <tr ng-repeat="rowData in $root.entities" ng-init="$last && entCtrl.load()">
+                        <td class="cell100 column1" ng-repeat="cellData in rowData">
+                                {{cellData}}
+                        </td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+        <!-- </div>
+      </div>
+      </div> -->

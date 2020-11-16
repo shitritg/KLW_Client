@@ -1,0 +1,129 @@
+
+<!--<div ng-init="regHomeCtrl.initFav()"></div>-->
+<div ng-init="regHomeCtrl.getTwoPop()"></div>
+<div ng-init="regHomeCtrl.getLastSaved()"></div>
+
+<div id="container" style="width:100%; height:100%; ">                                   
+        <div id="left" style="float:left; width:50%; height:100%;"> 
+                Popular pois that may interest you:
+                <br>
+                <div ng-repeat="poi in regHomeCtrl.twoPop">
+                       
+                                Poi name:
+                                <a ng-click="regHomeCtrl.getPOIDetForPop(poi.name)"> {{poi.name}}   </a> 
+                                <br>  
+                                <a>  
+                                <img ng-click="regHomeCtrl.getPOIDetForPop(poi.name)" ng-style="{'height': '100px'}" ng-src="{{poi.image}} ">
+                                </a>
+             
+                                <div ng-show="regHomeCtrl.boolMapPop[poi.name]">
+                                  views:
+                                  {{$root.pois[regHomeCtrl.indexOf(poi)].views+1}}
+                                 <br> 
+                                Description:
+                                 <span >{{poi.description}}</span>
+                                 <br>
+                                 Rank:
+                                 {{$root.pois[regHomeCtrl.indexOf(poi)].rank}}
+                                 <br>
+                                 feedbacks:
+                                 <br>
+                                 <span >{{$root.pois[regHomeCtrl.indexOf(poi)].feedback1}}</span>,  <span >{{$root.pois[regHomeCtrl.indexOf(poi)].date1}}</span>
+                                 <br>
+                                 <span >{{$root.pois[regHomeCtrl.indexOf(poi)].feedback2}}</span>,  <span >{{$root.pois[regHomeCtrl.indexOf(poi)].date2}}</span>
+                                 <br>
+                                </div>
+                                <br>
+                                 <button ng-click="regHomeCtrl.rank(poi.name)"  ng-show="$root.userName!='guest'">rank</button>
+                        
+ <!--                 <button ng-click="regHomeCtrl.addToFav(poi.name) ">{{regHomeCtrl.favBool}}</button> -->
+
+                                   
+                 </div>
+
+        </div>                     
+        <div id="right" style="float:right; width:50%;"> 
+                 {{regHomeCtrl.lastSavedlbl}}
+                <br>
+                <div ng-repeat="poiLast in regHomeCtrl.lastSaved">
+                                Poi name:
+                               <a ng-click="regHomeCtrl.getPOIDetForLast(poiLast.name)"> {{poiLast.name}}   </a> 
+                               <br>  
+                               <a>  
+                               <img ng-click="regHomeCtrl.getPOIDetForLast(poiLast.name)" ng-style="{'height': '100px'}" ng-src="{{poiLast.image}} ">
+                               </a>
+            
+                               <div ng-show="regHomeCtrl.boolMapLast[poiLast.name]">
+                                 views:
+                                 {{$root.pois[regHomeCtrl.indexOf(poiLast)].views+1}}
+                                <br> 
+                               Description:
+                                <span >{{poiLast.description}}</span>
+                                <br>
+                                Rank:
+                                {{$root.pois[regHomeCtrl.indexOf(poiLast)].rank}}
+                                <br>
+                                feedbacks:
+                                <br>
+                                <span >{{$root.pois[regHomeCtrl.indexOf(poiLast)].feedback1}}</span>,  <span >{{$root.pois[regHomeCtrl.indexOf(poiLast)].date1}}</span>
+                                <br>
+                                <span >{{$root.pois[regHomeCtrl.indexOf(poiLast)].feedback2}}</span>,  <span >{{$root.pois[regHomeCtrl.indexOf(poiLast)].date2}}</span>
+                                <br>
+                               </div>
+                               <br>
+                               
+                               <button ng-click="regHomeCtrl.rank(poi.name)"  ng-show="$root.userName!='guest'">rank</button>
+                               <td>
+                                       <!-- <button ng-click="regHomeCtrl.addToFav(poiLast)" ng-show="$root.userName!='guest'">remove from favorites</button>-->
+                                      <!--  <button ng-click="regHomeCtrl.removeFromFav(poi)">remove from favorites</button>-->
+                                        
+                              </td>
+                           <!--       <button ng-click="regHomeCtrl.addToFav(poi.name) ">{{regHomeCtrl.favBool}}</button>-->
+        
+                      
+                      
+                </div>
+        </div>                   
+</div>
+
+<div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <p>Rank {{regHomeCtrl.currRank}}</p>
+                  Rank: 
+                  <select name="selectedRank" ng-model="selectedRank">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select>
+                  <br>        
+                  Your feedback: 
+                  <br>     
+                  <input type="text" ng-model="feedback"  style="width:60%; height:20%;" >
+                  <br>
+                  <button id="regBut" ng-click="regHomeCtrl.rankPoi()">rank</button>
+                </div>
+              
+        </div>
+<!---
+
+
+
+
+
+
+
+
+
+       
+
+                              
+            
+
+            
+
+    

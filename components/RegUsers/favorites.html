@@ -1,0 +1,93 @@
+<!--<div ng-init="favoritesCtrl.showFavorites()"></div>-->
+<div ng-init="favoritesCtrl.initMap()"></div><!--det=false-->
+<!--<div ng-init="favoritesCtrl.initFav()"></div>-->
+<div ng-init="favoritesCtrl.initNums()"></div><!--undependent-->
+<h1>Favorites</h1>
+
+<br>
+<button ng-click="favoritesCtrl.saveFav()">Save Favorites</button>
+<br>
+<p>Sort by:
+        <select name="wantedSort"  ng-model="wantedSort">
+                <option value="taste">taste</option> 
+                <option value="category">category</option>
+                <option value="-rank">rank</option>
+        </select>
+</p>
+<p >Choose category to filter by :
+        <select  ng-options="category for category in favoritesCtrl.categories" ng-model="favoritesCtrl.categoryToFilter" ng-change="favoritesCtrl.filter()">
+        </select>
+</p>
+<input type="checkbox" ng-click="favoritesCtrl.checkSort()" > Sort by your taste<br>
+<button ng-click="favoritesCtrl.userSort()" ng-show="favoritesCtrl.checkSortBool">Sort</button>
+
+<table>
+<tr ng-repeat="poi in $root.mergedFav | filter : favoritesCtrl.filterFunc | orderBy : wantedSort">
+
+        <td ng-show="favoritesCtrl.poiExistInMergedFav(poi)">
+                favorite name:
+                <br>
+               <a ng-click="favoritesCtrl.getPOIDet(poi.name)"> {{poi.name}}</a>
+               <br>  
+               <a>  
+               <img ng-click="favoritesCtrl.getPOIDet(poi.name)" ng-style="{'height': '100px'}" ng-src="{{poi.image}} ">
+               </a>
+
+               <div ng-show="favoritesCtrl.boolMap[poi.name]">
+                 views:
+                 {{poi.views+1}}
+                <br> 
+               Description:
+                <span >{{poi.description}}</span>
+                <br>
+                Rank:
+                {{poi.rank}}
+                <br>
+                feedbacks:
+                <br>
+                <span >{{poi.feedback1}}</span>,  <span >{{poi.date1}}</span>
+                <br>
+                <span >{{poi.feedback2}}</span>,  <span >{{poi.date2}}</span>
+                <br>
+               </div>
+        </td>
+        <td>
+                <button ng-click="favoritesCtrl.addToFav(poi)">remove from favorites</button>
+                <br>
+                <td>
+                        <button ng-click="favoritesCtrl.rank(poi.name)"  ng-show="$root.userName!='guest'">rank</button>
+              </td>
+              <td>
+                    <select  ng-options="n for n in favoritesCtrl.Nums" ng-model="favoritesCtrl.currPlace[$index]" ng-change="favoritesCtrl.addToSortArr(poi,$index)" ng-show="favoritesCtrl.checkSortBool"></select>
+          </td>
+      </td>
+      
+
+
+
+</tr>
+</table>
+
+<div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Rank {{favoritesCtrl.currRank}}</p>
+          Rank: 
+          <select name="selectedRank" ng-model="selectedRank">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+          <br>        
+          Your feedback: 
+          <br>     
+          <input type="text" ng-model="feedback"  style="width:60%; height:20%;" >
+          <br>
+          <button id="regBut" ng-click="favoritesCtrl.rankPoi()">rank</button>
+        </div>
+      
+</div>

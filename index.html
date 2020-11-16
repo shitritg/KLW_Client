@@ -1,0 +1,106 @@
+
+<html ng-app="Visualization">
+    <head><title>KarmaLego Wisualization</title>
+        <link rel="stylesheet" type="text/css" href="design.css">
+</head>
+    <body ng-controller="indexController as indxCtrl">
+                <!-- <div ng-init="indxCtrl.goHome()"></div> -->
+
+<!-- <center> -->
+        <!-- <div class="scrollmenu"> -->
+            <div class="scrollmenu">
+                <img id="CDALAB" ng-src="CDALAB.jpg"/>
+                <a class="download-wrapper" ng-class="{'selected': is_highlight('Files')}" ng-click="indxCtrl.changeLocation('Files')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">attach_file</i><br/>DataSets</p></a>
+                <a id="uploadFormbtn" class="download-wrapper" ng-class="{'selected': is_highlight('upload')}"  ng-click="indxCtrl.changeLocation('upload')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">cloud_upload</i><br />Upload</p></a>
+                <a id="Analysisbtn" class="download-wrapper" ng-class="{'selected': is_highlight('Analysis')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('Analysis')"><p class="download" style="padding: 0px !important;"><i class="material-icons" ng-style="{'font-size': '35px'}">equalizer</i><br/>Analysis</p></a>
+                <a class="download-wrapper" ng-class="{'selected': is_highlight('states')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('states')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">build</i><br/>States</p></a>
+                <a class="download-wrapper" ng-class="{'selected': is_highlight('entities')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('entities')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">face</i><br/>Entities</p></a>
+                <a class="download-wrapper" ng-class="{'selected': is_highlight('TIRPs')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('TIRPs')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">clear_all</i><br/>TIRPs</p></a>
+                <a class="download-wrapper" style="width: 9% !important;" ng-class="{'selected': is_highlight('TIRP entities')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('TIRP entities')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">how_to_reg</i><br/>TIRP entities</p></a>
+                <a class="download-wrapper" style="width: 10% !important;" ng-class="{'selected': is_highlight('predictive TIRPs')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('predictive TIRPs')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}">extension</i><br/>Discriminative TIRPs</p></a>
+                <a class="download-wrapper" ng-class="{'selected': is_highlight('search')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('search')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}" style="color: #6495ED !important;">search</i><br/>TIRPs</p></a>
+                <a class="download-wrapper" style="width: 9% !important;" ng-class="{'selected': is_highlight('searchTbl')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('searchTbl')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}" style="color: #9932CC !important;">search</i><br/>TIRPs Table</p></a>
+                <a class="download-wrapper" ng-class="{'selected': is_highlight('psearch')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('psearch')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}" style="color: #DB7093 !important;">search</i><br/>PTIRPs</p></a>
+                <a class="download-wrapper" style="width: 9% !important;" ng-class="{'selected': is_highlight('psearchTbl')}" ng-disabled="selcetedDataSet == undefined" ng-click="indxCtrl.changeLocation('psearchTbl')"><p class="download"><i class="material-icons" ng-style="{'font-size': '35px'}" style="color: #EE82EE !important;">search</i><br/>PTIRPs Table</p></a>
+            </div>
+        <!-- </div> -->
+</center>
+        <!-- <br/>
+        <br/> -->
+        <!-- <br/> -->
+        <!-- <br/> -->
+        <div  ng-view></div>
+
+
+    <!-- </div> -->
+        <!-- <script src="config.js"></script> -->
+        <!-- <script src="jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="angular-datatables.min.js"></script>
+        <script src="jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <link rel="stylesheet" href="datatables.bootstrap.css"> -->
+        
+        <!-- <script src="node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>   
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script src='jquery-input-file-text.js'></script>      -->
+
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
+        <script src="node_modules/datatables.net/js/jquery.dataTables.js"></script>
+        <link href="node_modules/datatables.net-dt/css/jquery.dataTables.css" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>      
+        <script src="app.js" ></script>
+        <script src="indexController.js" ></script>
+        <script src="components/Analysis/analysisController.js" ></script>
+        <script src="components/States/statesController.js" ></script>
+        <script src="components/Services/serviceController.js" ></script>
+        <script src="components/Services/localStorageModel.js"></script>
+        <script src="components/Home/homeController.js"></script>
+        <script src="components/Entities/entitiesController.js"></script>
+        <script src="components/TIRPEntities/TIRPEntitiesController.js"></script>
+        <script src= "components/PredictiveTIRPs/predictiveTIRPsController.js"></script>
+        <script src= "components/TIRPs/tirpsController.js"></script>
+        <script src= "components/UploadDataSet/uploadDataSetController.js"></script>
+        <script src= "components/SearchTool/searchToolController.js"></script>
+        <script src= "components/SearchTool/searchTblController.js"></script>
+        <script src= "components/SearchTool/psearchToolController.js"></script>
+        <script src= "components/SearchTool/psearchTblController.js"></script>
+
+        <!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.1.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script> -->
+        <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet"> -->
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+        
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />   -->
+        <script src="//cdn.datatables.net/plug-ins/1.10.20/sorting/natural.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+
+
+        
+        <!-- <script src="https://code.angularjs.org/1.3.0/angular.js"></script>   -->
+
+
+    </body>
+    </html>
+    
+    
+
+    

@@ -1,0 +1,67 @@
+<form ng-submit="regCtrl.submit()" name="myForm">
+    <label for="userName" id="userNamelbl">User Name:</label>
+    <input type="text" name="userName" ng-model="username"  ng-minlength="3" ng-maxlength="8" ng-pattern="/^[a-zA-Z]*$/" required>
+    <p ng-show="(myForm.userName.$dirty || submitted) && myForm.userName.$error.required">You must enter Username.</p>
+    <p ng-show="myForm.userName.$error.pattern || myForm.userName.$error.minlength || myForm.userName.$error.maxlength">Username need to be 3-8 letters ONLY!</p>
+    <br>
+    <label for="password" id="passswordlbl">Password:</label>
+    <input type="password" name="password" ng-model="password" ng-pattern="/^[0-9a-zA-Z]*$/" ng-minlength="5" , ng-maxlength="10"  ng-trim="false" required >
+    <p ng-show="(myForm.password.$dirty || submitted) && myForm.password.$error.required">You must enter password.</p>
+    <p ng-show="myForm.password.$error.pattern || myForm.password.$error.minlength || myForm.password.$error.maxlength">Your password need to 5-10 characters long and contains letters and number ONLY!</p>
+    <br>
+    <label for="firstName" id="firstNamelbl">First Name:</label>
+    <input type="text" name="firstName" ng-model="firstname"  ng-pattern="/^[a-zA-Z]*$/" required >
+    <p ng-show="(myForm.firstName.$dirty || submitted) && myForm.firstName.$error.required">You must enter First Name</p>
+    <p ng-show="myForm.firstName.$error.pattern">Letters only!</p>
+    <br>
+    <label for="lastName" id="lastNamelbl">Last Name:</label>
+    <input type="text" name="lastName" ng-model="lastname"  ng-pattern="/^[a-zA-Z]*$/" required>  
+    <p ng-show="(myForm.lastName.$dirty || submitted) && myForm.lastName.$error.required">You must enter Last Name</p>
+    <p ng-show="myForm.lastName.$error.pattern">Letters only!</p>
+    <br> 
+     <label for="country" id="countrylbl">Country:</label>
+    <select name="selectedName" ng-model="selectedName"  ng-options="country.Name as country.Name for country in regCtrl.Countries" required></select>
+    <p ng-show="(myForm.selectedName.$dirty || submitted) && myForm.selectedName.$error.required">You must enter Country</p>
+    <br>
+    <label for="city" id="citylbl">City:</label>
+    <input type="text" name="city" ng-model="city"  ng-pattern="/^[a-zA-Z]*$/" required> 
+    <p ng-show="(myForm.city.$dirty || submitted) && myForm.city.$error.required">You must enter City</p>
+    <p ng-show="myForm.city.$error.pattern">Letters only!</p>
+
+      <br>
+    <label for="email" id="emaillbl">Email:</label>
+    <input type="email" name="email" ng-model="email"  ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/" required> 
+    <p ng-show="(myForm.email.$dirty || submitted) && myForm.email.$error.required">You must enter an Email address</p>
+    <p ng-show="myForm.email.$error.pattern">This is not a valid Email address</p>
+   <br>
+   <label for="Q1" id="q1lbl">Security Question no 1:</label>
+   <select name="selectedQ1"  ng-model="selectedQ1"  ng-options="question for question in regCtrl.questions" required></select>
+   <p ng-show="(myForm.selectedQ1.$dirty || submitted) && myForm.selectedQ1.$error.required">You must enter question 1</p>
+   <br>
+   <label for="A1" id="a1lbl">Security answer no 1:</label>
+   <input type="text" name="A1" ng-model="A1" required  >
+   <p ng-show="(myForm.A1.$dirty || submitted) && myForm.A1.$error.required">You must enter answer 1</p>
+   <br>
+   <label for="Q2" id="q2lbl">Security Question no 2:</label>
+   <select name="selectedQ2" ng-model="selectedQ2"  ng-options="question for question in regCtrl.questions" required></select>
+   <p ng-show="(myForm.selectedQ2.$dirty || submitted) && myForm.selectedQ2.$error.required">You must enter question 2</p>
+   <br>
+   <label for="A2" id="a2lbl">Security answer no 2:</label>
+   <input type="text" name="A2" ng-model="A2" required  >
+   <p ng-show="(myForm.A2.$dirty || submitted) && myForm.A2.$error.required">You must enter answer 2</p>
+   <br>
+    <label for="cat1" id="cat1lbl">museum</label>
+    <input type="checkbox" id="cat1" ng-click="regCtrl.addCat('museum')">
+    <br>
+    <label for="cat2" id="cat1lbl">restaurant</label>
+    <input type="checkbox" id="cat2" ng-click="regCtrl.addCat('restaurant')">
+    <br>
+    <label for="cat3" id="cat1lbl">cofee shop</label>
+    <input type="checkbox" id="cat3" ng-click="regCtrl.addCat('cofee shop')">
+    <br>
+    <label for="cat4" id="cat1lbl">center</label>
+    <input type="checkbox" id="cat4" ng-click="regCtrl.addCat('center')">
+    <br>
+    <input type="submit" value="Submit" ng-disabled="myForm.$invalid || regCtrl.cats.length<2">
+
+</form>

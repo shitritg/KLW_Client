@@ -1,0 +1,250 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<br>
+<div ng-init="uploadCtrl.initForm()"></div>
+<!-- UPLOAD FORM -->
+<div id="formcontainer" ng-show="!uploadCtrl.editMode">
+<form name="uploadForm" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="col">
+            <span ng-style="{'color':'red','font-size': '155%'}">*</span>
+            <label for="dataSetName" id="dataSetNamelbl">DataSet Name</label>
+            <input type="text" name="dataSetName" ng-model="dataSetName" class="form-control" placeholder="DataSet Name"
+                required>
+        </div>
+        <div class="col">
+                <span ng-style="{'color':'red','font-size': '155%'}">*</span>
+            <label for="userName" id="userNamelbl">User Name</label>
+            <input type="text" name="userName" ng-model="userName" class="form-control" placeholder="User Name"
+                required>
+        </div>
+    </div>
+    <br>
+    <div class="form-row">
+        <div class="col">
+                <label for="file1" id="file1lbl">Select KL output file to upload</label>
+            <div class="custom-file">
+                <!-- Select KL output file to upload: -->
+                <input type="file" class="custom-file-input" file-model="file1" name="file1" id="file1" ng-model="file1">
+                <label class="custom-file-label" for="file1" data-browse="upload">KL output file</label>
+            </div>
+        </div>
+        <div class="col">
+            <label for="className" id="dataSetNamelbl">Class 1 Name</label>
+            <input type="text" name="className" ng-model="className" class="form-control" placeholder="Class 1 Name">
+        </div>
+        <div class="col">
+                <label for="timestamp" id="timestamplbl" title="The time units where the data were sampled">maximal granularity</label>
+                <select class="form-control" name="timestamp" ng-model="timestamp">
+                        <option>Years</option> 
+                        <option>Months</option> 
+                        <option>Days</option> 
+                        <option>Hours</option>   
+                        <option>Minutes</option>   
+                        <option>Seconds</option>  
+                      </select>
+            </div>
+    </div>
+    <br>
+    <div class="form-row">
+        <div class="col">
+                <label for="file2" id="file2lbl">Select states file to upload</label>
+                <div class="custom-file">
+            <input type="file" class="custom-file-input" accept=".csv" name="file2" file-model="file2" ng-model="file2" id="file2">
+            <label class="custom-file-label" for="file2" data-browse="upload">states file</label>
+        </div>
+    </div>
+        <div class="col">
+                <label for="file3" id="file3lbl">Select entities file to upload</label>
+                <div class="custom-file">
+            <input type="file" class="custom-file-input" accept=".csv" name="file3" file-model="file3" ng-model="file3" id="file3">
+            <label class="custom-file-label" for="file3" data-browse="upload">entities file</label>
+        </div>
+    </div>
+    <div class="col">
+        <label for="file4" id="file4lbl">Select raw data file to upload</label>
+        <div class="custom-file">
+    <input type="file" class="custom-file-input" name="file4" file-model="file4" ng-model="file4" id="file4">
+    <label class="custom-file-label" for="file4" data-browse="upload">raw data file</label>
+</div>
+</div>
+    </div>
+    <br>
+    <!-- <div class="form-row">
+            <div class="col">
+                    <label for="file4" id="file4lbl">Select raw data file to upload</label>
+                    <div class="custom-file">
+                <input type="file" class="custom-file-input" name="file4" file-model="file4" ng-model="file4" id="file4">
+                <label class="custom-file-label" for="file4" data-browse="upload">raw data file</label>
+            </div>
+        </div>
+        <div class="col">
+                <label for="file6" id="file6lbl">Select time intervals file to upload</label>
+                <div class="custom-file">
+            <input type="file" class="custom-file-input" name="file6" file-model="file6" ng-model="file6" id="file6">
+            <label class="custom-file-label" for="file6" data-browse="upload">time intervals file</label>
+        </div>
+    </div>
+        </div> -->
+    <div class="form-row">
+        <div class="col">
+                <label for="file5" id="file5lbl">Select KL output file to upload for class 0</label>
+                <div class="custom-file">
+            <input type="file" class="custom-file-input" name="file5" file-model="file5" ng-model="file5" id="file5">
+            <label class="custom-file-label" for="file5" data-browse="upload">class 0 KL output file</label>
+        </div>
+    </div>
+        <div class="col">
+            <label for="secclassName" id="secclassNamelbl">class 0 Name</label>
+            <input type="text" name="secclassName" ng-model="secclassName" class="form-control"
+                placeholder="class 0 Name">
+        </div>
+    </div>
+    <br>
+    <div class="form-row">
+        <label for="Comments" id="Commentslbl">Comments</label>
+        <textarea class="form-control" name="Comments" ng-model="Comments" rows="3" placeholder="Comments"></textarea>
+        </div>
+    <br>
+    <div class="form-row">
+<button type="submit" ng-click="uploadCtrl.submit('upload',uploadForm.$valid)"  id="submit" name="submit" class="btn btn-primary">Upload Files</button>
+    </div>
+</form>
+</div>
+
+<!-- EDIT FORM -->
+<div id="formcontainer" ng-show="uploadCtrl.editMode">
+        <form name="editForm" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="col">
+                    <span ng-style="{'color':'red','font-size': '155%'}">*</span>
+                    <label for="dataSetName" id="dataSetNamelbl">DataSet Name</label>
+                    <input type="text" id="dataSetName" name="dataSetName" ng-model="dataSetName" class="form-control" placeholder="DataSet Name"
+                        required>
+                </div>
+                <div class="col">
+                        <span ng-style="{'color':'red','font-size': '155%'}">*</span>
+                    <label for="userName" id="userNamelbl">User Name</label>
+                    <input type="text" id="userName" name="userName" ng-model="userName" class="form-control" placeholder="User Name"
+                        required>
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <div class="col">
+                        <label for="file1" id="file1lbl">Select KL output file to upload</label>
+                    <div class="custom-file">
+                        <!-- Select KL output file to upload: -->
+                        <input type="file" class="custom-file-input" file-model="file1" name="file1" id="file1" ng-model="file1">
+                        <label class="custom-file-label" for="file1" data-browse="">{{selcetedDataSet.output_file_name}}</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="className" id="dataSetNamelbl">Class Name</label>
+                    <input type="text" id="className" name="className" ng-model="className" class="form-control" placeholder="Class Name">
+                </div>
+                <div class="col">
+                        <label for="timestamp" id="timestamplbl" title="The time units where the data were sampled">maximal granularity</label>
+                        <select id="timestamp" class="form-control" name="timestamp" ng-model="timestamp">
+                                <option>Years</option> 
+                                <option>Months</option> 
+                                <option>Days</option> 
+                                <option>Hours</option>   
+                                <option>Minutes</option>   
+                                <option>Seconds</option>  
+                              </select>
+                    </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <div class="col">
+                        <label for="file2" id="file2lbl">Select states file to upload</label>
+                        <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept=".csv" name="file2" file-model="file2" ng-model="file2" id="file2">
+                    <label class="custom-file-label" for="file2" data-browse="">{{selcetedDataSet.states_file_name}}</label>
+                </div>
+            </div>
+                <div class="col">
+                        <label for="file3" id="file3lbl">Select entities file to upload</label>
+                        <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept=".csv" name="file3" file-model="file3" ng-model="file3" id="file3">
+                    <label class="custom-file-label" for="file3" data-browse="">{{selcetedDataSet.entities_file_name}}</label>
+                </div>
+            </div>
+            <div class="col">
+                <label for="file4" id="file4lbl">Select raw data file to upload</label>
+                <div class="custom-file">
+            <input type="file" class="custom-file-input" name="file4" file-model="file4" ng-model="file4" id="file4">
+            <label class="custom-file-label" for="file4" data-browse="">{{selcetedDataSet.raw_data_file_name}}</label>
+        </div>
+    </div>
+            </div>
+            <!-- <br>
+            <div class="form-row">
+                    <div class="col">
+                            <label for="file4" id="file4lbl">Select raw data file to upload</label>
+                            <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="file4" file-model="file4" ng-model="file4" id="file4">
+                        <label class="custom-file-label" for="file4" data-browse="change">{{selcetedDataSet.raw_data_file_name}}</label>
+                    </div>
+                </div>
+                <div class="col">
+                        <label for="file6" id="file6lbl">Select time intervals file to upload</label>
+                        <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="file6" file-model="file6" ng-model="file6" id="file6">
+                    <label class="custom-file-label" for="file6" data-browse="change">{{selcetedDataSet.time_intervals_file_name}}</label>
+                </div>
+            </div>
+                </div> -->
+                <br>
+            <div class="form-row">
+                <div class="col">
+                        <label for="file5" id="file5lbl">Select KL output file to upload for class 0</label>
+                        <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="file5" file-model="file5" ng-model="file5" id="file5">
+                    <label class="custom-file-label" for="file5" data-browse="">{{selcetedDataSet.second_class_output_file_name}}</label>
+                </div>
+            </div>
+                <div class="col">
+                    <label for="secclassName" id="secclassNamelbl">class 0 Name</label>
+                    <input type="text" id="secclassName" name="secclassName" ng-model="secclassName" class="form-control"
+                        placeholder="class 0 Name">
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <label for="Comments" id="Commentslbl">Comments</label>
+                <textarea class="form-control" id="Comments" name="Comments" ng-model="Comments" rows="3" placeholder="Comments"></textarea>
+                </div>
+            <br>
+            <div class="form-row">
+        <!-- <button type="submit" ng-click="uploadCtrl.submit('edit',editForm.$valid)"  id="submit" name="submit" class="btn btn-primary">Save Changes</button> -->
+            </div>
+        </form>
+        </div>
+
+        <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            <center>
+              <h4 class="modal-title">Uploading...</h4>
+              <p>Please wait</p>
+              <div id="loader" class="loader"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+          
+        </div>
+      </div>

@@ -1,0 +1,211 @@
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+        <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+        <script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
+        <link href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
+        <script src="https://cdn.datatables.net/fixedheader/2.1.0/js/dataTables.fixedHeader.min.js"></script>
+        <script src="https://cdn.datatables.net/fixedheader/2.1.0/js/dataTables.fixedHeader.js"></script>
+</head>
+<div ng-init="homeCtrl.getDatasets()"></div>
+<center>
+        <br>
+        <!-- <button id="uploadFormbtn" class="upload" ng-style="{'font-size': '1px', 'right': '200px'}">
+                <p class="download"><i class="material-icons"
+                                ng-style="{'font-size': '35px'}">cloud_upload</i><br />upload new dataSet</p>
+        </button> -->
+        <!-- <div class="table-responsive"> -->
+                <div id="dataSetsDiv">
+                <table id="dataSetsTbl" style="table-layout:fixed" class="table table-striped table-bordered table-sm">
+                        <thead>
+                                <tr>
+                                        <th class="th-sm">DataSet name</th>
+                                        <th class="th-sm">User name</th>
+                                        <th class="th-sm">Comments</th>
+                                        <th class="th-sm">Edit</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr ng-repeat="dataSet in homeCtrl.dataSets | orderBy:'data_set_name'"
+                                        ng-click=homeCtrl.rowSelected(dataSet)
+                                        ng-class="{'selected': is_highlight(dataSet)}" ng-init="$last && homeCtrl.load()">
+                                        <!-- class="row100 body">  -->
+                                        <!-- <a ng-click="homeCtrl.selecetData(dataSet,this)"></a> {{dataSet.data_set_name}}</a>           -->
+                                        <td class="cell100 column1">
+                                                {{dataSet.data_set_name}}
+                                        </td>
+                                        <td class="cell100 column1">
+                                                {{dataSet.username}}
+                                        </td>
+                                        <td class="cell100 column1">
+                                                {{dataSet.comments}}
+                                        </td>
+                                        <td class="cell100 column1">
+                                                <button class="edit" ng-style="{'font-size': '1px'}"
+                                                        ng-click="homeCtrl.edit(dataSet,this)">
+                                                        <p class="download"><i class="material-icons"
+                                                                        ng-style="{'font-size': '35px'}">edit</i><br />
+                                                        </p>
+                                                </button>
+                                        </td>
+                                </tr>
+                        </tbody>
+                </table>
+                </div>
+        <!-- </div> -->
+</center>
+<!-- </div> -->
+<!-- <center>
+        <div id="myModal" class="modal">
+
+                <div class="modal-content">
+                        <right>
+                        <span class="close">&times;</span>
+                </right>
+                        <div class="container" ng-init="homeCtrl.initialToolTip()"></div>
+                        <form name="myForm" id="upload" enctype="multipart/form-data">
+                                <div class="sep"></div>
+                                <div class="inputs"> -->
+                                        <!-- <label for="dataSetName" id="dataSetNamelbl">DataSet Name:</label> -->
+                                        <!-- <span ng-style="{'color':'red','font-size': '155%'}">*</span> DataSet Name:
+                                        <input type="text" name="dataSetName" ng-model="dataSetName" required>
+                                        <br>
+                                        <br>
+                                        Class Name:
+                                        <input type="text" name="className" ng-model="className">
+                                        <br>
+                                        <br> -->
+                                        <!-- <label for="userName" id="userNamelbl">User Name:</label> -->
+                                        <!-- <span ng-style="{'color':'red','font-size': '155%'}">*</span> User Name:
+                                        <input type="text" name="userName" ng-model="userName" required>
+                                        <br>
+                                        <br>
+                                        Select KL output file to upload:
+                                        <input type="file" file-model="file1" name="file1" id="file1" ng-model="file1"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}" />
+                                        <br>
+                                        <br> -->
+                                        <!-- <label for="file2" id="file2lbl">Select states file to upload:</label> -->
+                                        <!-- Select states file to upload:
+                                        <input type="file" accept=".csv" name="file2" file-model="file2"
+                                                ng-model="file2" id="file2"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        <label for="file3" id="file3lbl">Select entities file to upload:</label> -->
+                                        <!-- Select entities file to upload:
+                                        <input type="file" accept=".csv" name="file3" file-model="file3"
+                                                ng-model="file3" id="file3"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        Select raw data file to upload:
+                                        <input type="file" name="file4" file-model="file4" ng-model="file4" id="file4"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        Second class Name:
+                                        <input type="text" name="secclassName" ng-model="secclassName">
+                                        <br>
+                                        <br>
+                                        Select KL output file to upload for the second class:
+                                        <input type="file" name="file5" file-model="file5" ng-model="file5" id="file5"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        <input type="text" name="Comments"
+                                                ng-style="{'height':'100px','width': '300px'}" ng-model="Comments">
+                                        <br>
+                                        <br>
+                                        <input type="button" value="Upload Files" ng-disabled="uploadForm.$invalid"
+                                                ng-click="homeCtrl.submit('upload')" id="submit" name="submit">
+                                </div>
+                        </form>
+                </div>
+        </div> -->
+
+        <!-- The Modal for edit -->
+        <!-- <div id="editModal" class="modal"> -->
+
+                <!-- Modal content -->
+                <!-- <div class="modal-content">
+                                <right>
+                        <span class="close">&times;</span>
+                        </right>
+                        <div class="container" ng-init="homeCtrl.initialToolTip()"></div>
+                        <form name="myForm" id="upload" enctype="multipart/form-data">
+                                <div class="sep"></div>
+                                <div class="inputs"> -->
+                                        <!-- <label for="dataSetName" id="dataSetNamelbl">DataSet Name:</label> -->
+                                        <!-- <span ng-style="{'color':'red','font-size': '155%'}">*</span> DataSet Name:
+                                        <input type="text" id="dataSetName" ng-model="dataSetName" value="" required>
+                                        <br>
+                                        <br> -->
+                                        <!-- <label for="userName" id="userNamelbl">User Name:</label> -->
+                                        <!-- <span ng-style="{'color':'red','font-size': '155%'}">*</span> User Name:
+                                        <input type="text" id="userName" ng-model="userName" value="" required>
+                                        <br>
+                                        <br> -->
+                                        <!-- KL output file: {{selcetedDataSet.output_file_name}}
+                                        <br>
+                                        Change file:
+                                        <input type="file" file-model="file1" name="file1" id="file1" ng-model="file1"
+                                                value="change file"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}" />
+                                                <br>
+                                                <br>
+                                        Class Name:
+                                        <input type="text" id="className" ng-model="className" value="">
+                                        <br>
+                                        <br>
+                                        states file: {{selcetedDataSet.states_file_name}}
+                                        <br> -->
+                                        <!-- <label for="file2" id="file2lbl">Select states file to upload:</label> -->
+                                        <!-- Change file:
+                                        <input type="file" accept=".csv" name="file2" file-model="file2"
+                                                ng-model="file2" id="file2"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        entities file: {{selcetedDataSet.entities_file_name}}
+                                        <br> -->
+                                        <!-- <label for="file3" id="file3lbl">Select entities file to upload:</label> -->
+                                        <!-- Change file:
+                                        <input type="file" accept=".csv" name="file3" file-model="file3"
+                                                ng-model="file3" id="file3"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        raw data file: {{selcetedDataSet.raw_data_file_name}}
+                                        <br>
+                                        Change file:
+                                        <input type="file" name="file4" file-model="file4" ng-model="file4" id="file4"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                        <br>
+                                        <br>
+                                        output file for the second class:
+                                        {{selcetedDataSet.second_class_output_file_name}}
+                                        <br>
+                                        Change file:
+                                        <input type="file" name="file5" file-model="file5" ng-model="file5" id="file5"
+                                                ng-style="{'position':'absolute', 'padding-left':'15px'}">
+                                                <br>
+                                                <br>
+                                        Second class Name:
+                                        <input type="text" id="secclassName" ng-model="secclassName">
+                                        <br>
+                                        <br>
+                                        Comments
+                                        <br>
+                                        <input type="text" id="Comments" ng-style="{'height':'100px','width': '300px'}"
+                                                ng-model="Comments" value="">
+                                        <br>
+                                        <br>
+                                        <input type="button" value="Save Changes" ng-disabled="uploadForm.$invalid"
+                                                ng-click="homeCtrl.submit('edit')" id="submit" name="submit">
+                                </div>
+                        </form>
+                </div>
+        </div>
+</center> -->

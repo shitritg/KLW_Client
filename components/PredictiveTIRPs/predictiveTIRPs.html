@@ -1,0 +1,272 @@
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"> -->
+        <!-- <script src="http://www.google.com/jsapi?fake=.js"></script> -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    </head>
+    <br>
+    <center>
+    <div id="loader" class="loader" ng-hide="predCtrl.loaded"></div>
+</center>
+    <div ng-init="predCtrl.initiateTirps()"></div>
+    <!-- <div ng-show="predCtrl.loaded"> -->
+        <form name="weightsForm" enctype="multipart/form-data" class="form-inline" style="max-height: 5% !important; width: 100% !important; padding-right: 3px !important;padding-left: 1% !important;" ng-show="predCtrl.loaded">
+            <!-- <div class="form-row">
+    <div class="col"> -->
+            <label for="weight1" id="weight1lbl">v.s weight</label>
+            <input type="number" step="0.01" id="weight1" name="weight1" ng-model="weight1" class="form-control"
+                placeholder="v.s weight" required value="0.33" style="padding: 3px !important; height: 70% !important; width: 10% !important;">
+            <!-- </div>
+        <div class="col"> -->
+            <label for="weight2" id="weight2lbl">m.h.s weight</label>
+            <input type="number" step="0.01" id="weight2" name="weight2" ng-model="weight2" class="form-control"
+                placeholder="m.h.s weight" required value="0.33" style="padding: 3px !important; height: 70% !important;width: 10% !important;">
+            <!-- </div>
+<div class="col"> -->
+            <label for="weight3" id="weight3lbl">m.m.duration weight</label>
+            <input type="number" step="0.01" id="weight3" name="weight3" ng-model="weight3" class="form-control"
+                placeholder="m.m.duration weight" required value="0.33" style="padding: 3px !important; height: 70% !important;width: 10% !important;">
+            <!-- </div>
+    <div class="col"> -->
+            <span ng-show="predCtrl.calculateWeights()" style="font-weight: bold; padding-right: 0px !important;" ng-style="{'color':'red','font-size': '100%'}">The sum of
+                    weights must be 1!</span>
+            <button ng-disabled="predCtrl.calculateWeights()" ng-click="predCtrl.calculateScores()" id="submit"
+                name="submit" class="btn btn-primary" style="padding: 5px !important; height: 70% !important; margin: unset !important;">Calculate Scores</button>
+            <!-- </div>
+</div> -->
+        </form>
+        <!-- current path -->
+        <center>
+        <div id="pathOfTirps">
+        <nav class="navbar navbar-default pathLine" ng-show="predCtrl.loaded">
+            <div class="container-fluid pathLine" >
+                <div class="navbar-header pathLine">
+                    <span class="navbar-brand" ng-style="{'font-size': '15px'}">The current path</span>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li ng-click=predCtrl.goToRoot()><a href ng-click=predCtrl.goToRoot()>Root<i class="material-icons"
+                                ng-style="{'font-size': '15px'}">navigate_next</i></a></li>
+                    <li ng-repeat='tirp in ptirpsPathOfTirps' ng-show="tirp.partOfPath" ng-click="predCtrl.getLevel(tirp, $index)"><a href
+                            ng-click="predCtrl.getLevel(tirp, $index)">{{predCtrl.getSymbol(tirp)}}<i
+                                class="material-icons" ng-style="{'font-size': '15px'}">navigate_next</i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+<!-- <div ng-class="columnWidth"> -->
+</center>
+<div id="NextLevelLoader" class="loader" ng-show="predCtrl.loadingNextLevel"></div>
+<div id="currPTirpTblDiv" ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0">
+        <table id="currTirpTbl" style="table-layout:fixed" class="table table-striped table-bordered table-sm"
+            cellspacing="0" width="100%">
+            <caption style="text-align: center; font-size: 14px;font-weight: bold;">Selected TIRP</caption>
+            <thead>
+                <tr>
+                    <th class="th-sm">Metric</th>
+                    <th class="th-sm">Pop 1 ({{$root.selcetedDataSet.num_of_entities}})</th>
+                    <th class="th-sm">Pop 2 ({{$root.selcetedDataSet.num_of_entities_class_1}})</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="cell100 column1">
+                        V.S
+                    </td>
+                    <td class="cell100 column1">
+                        {{predCtrl.getVS0(ptirpsPathOfTirps[ptirpsPathOfTirps.length-1])}}                    </td>
+                    <td class="cell100 column1">
+                            {{predCtrl.getVSClass1(ptirpsPathOfTirps[ptirpsPathOfTirps.length-1])}}
+                        </td>
+                </tr>
+                <tr>
+                    <td class="cell100 column1">
+                        M.H.S
+                    </td>
+                    <td class="cell100 column1">
+                        {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__mean_horizontal_support}}
+                    </td>
+                    <td class="cell100 column1">
+                            {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__mean_horizontal_support_class_1}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="cell100 column1">
+                        M.M.D
+                    </td>
+                    <td class="cell100 column1">
+                        {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__mean_duration}} {{$root.selcetedDataSet.timestamp}}
+                    </td>
+                    <td class="cell100 column1">
+                            {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__mean_duration_class_1}} {{$root.selcetedDataSet.timestamp}}
+                        </td>
+                </tr>
+                <tr>
+                    <td class="cell100 column1">
+                        Size
+                    </td>
+                    <td class="cell100 column1">
+                        {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__tirp_size}}
+                    </td>
+                    <td class="cell100 column1">
+                            {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__tirp_size}}
+                        </td>
+                </tr>
+                <tr>
+                    <td class="cell100 column1">
+                        # Entities
+                    </td>
+                    <td class="cell100 column1">
+                        {{predCtrl.getAmountInstancesClass0(ptirpsPathOfTirps[ptirpsPathOfTirps.length-1])}}
+                    </td>
+                    <td class="cell100 column1">
+                            {{predCtrl.getAmountInstancesClass1(ptirpsPathOfTirps[ptirpsPathOfTirps.length-1])}}
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        <a ng-class="{'isDisabled': ptirpsPathOfTirps.length < 2}" ng-click="predCtrl.showMatrix()"
+            style="font-weight: bold; cursor: default;">Relations Data</a>
+        <!-- </div> -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <center>
+                            <table id="matrix">
+                                <!-- ng-show="pathOfTirps.length > 1" -->
+                                <caption style="text-align: center; font-size: 14px;">Relations Data</caption>
+                                <!-- <tbody> -->
+                                <tr ng-repeat="item in predCtrl.matrix">
+                                    <td ng-repeat="i in item track by $index" ng-class="{'matrixCell': has_content(i)}">
+                                        {{i}}</td>
+                                </tr>
+                                <!-- </tbody> -->
+                            </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</center>
+<div id="ptirpsTblDiv" width="80%">
+    <table id="ptirpsTbl" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+        <caption style="text-align: center; font-size: 14px; font-weight: bold;">Current Level - {{$root.plevel}} </caption>
+        <thead>
+            <tr>
+                <th class="th-sm" style="padding-right: 0px !important;">Next</th>
+                <th class="th-sm">Rel</th>
+                <th class="th-sm">Symbol</th>
+                <th class="th-sm">Score</th>
+                <th class="th-sm">V.S1</th>
+                <th class="th-sm">V.S2</th>
+                <th class="th-sm">M.H.S1</th>
+                <th class="th-sm">M.H.S2</th>
+                <th class="th-sm">M.M.D1</th>
+                <th class="th-sm">M.M.D2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--| orderBy:'-{getScore(tirp)}'-->
+            <tr ng-repeat="tirp in predCtrl.currentLevel | orderBy:'-score'" ng-click=predCtrl.getSubTree(tirp)
+                 >
+                <td>
+                        <button>
+                        </button>
+                    </td>
+                <td class="cell100 column1">
+                    {{predCtrl.getRel(tirp)}}
+                </td>
+                <td class="cell100 column1">
+                    {{predCtrl.getSymbol(tirp)}}
+                </td>
+                <td class="cell100 column1">
+                        {{tirp.score}}
+                </td>
+                <td class="cell100 column1">
+                    {{tirp._TIRP__vertical_support}}({{(tirp._TIRP__vertical_support/$root.selcetedDataSet.num_of_entities).toFixed(2)}})
+                </td>
+                <td class="cell100 column1">
+                    {{predCtrl.getVSClass1(tirp)}}
+                </td>
+                <td class="cell100 column1">
+                    {{tirp._TIRP__mean_horizontal_support}}
+                </td>
+                <td class="cell100 column1">
+                    {{tirp._TIRP__mean_horizontal_support_class_1}}
+                </td>
+                <td class="cell100 column1">
+                    {{tirp._TIRP__mean_duration}}
+                </td>
+                <td class="cell100 column1">
+                    {{tirp._TIRP__mean_duration_class_1}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="ptirpProperties" style="max-width:75% !important; width: 75% !important; padding-top: 1% !important;" ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0 ">
+    <!-- <center> -->
+    <form  class="form-inline" ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0" style="padding: 0px !important; margin: unset !important;">
+        <!-- <div id="chart_MHS"></div> -->
+        <!-- style="width: 50%; height: 120px;" -->
+        <div class="timeLineDiv" style="max-width: 39% !important; width: 35% !important; padding-top: 0px !important;padding-right: 3% !important;" ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0 ">
+                <span ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0" style="text-align: center; font-size: 14px;font-weight: bold;padding-bottom: 8% !important; color: #777777">Mean Presentation (Pop 1 / Pop 2)</span>
+                <!-- <span style="text-align: center; font-size: 14px;font-weight: bold;padding-bottom: 8% !important; color: #777777" ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && $root.selcetedDataSet.class_name!=''">({{$root.selcetedDataSet.class_name}})</span> -->
+                <div ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0"  id="ptimeline"></div>
+        </div>
+        <div id="chart_VS" style="width: 29% !important; height: 100% !important; padding-top: 0px !important; padding-right: 2px !important;"></div>
+        <div id="chart_HS" style="width: 17% !important; height: 100% !important; padding-top: 0px !important;"></div>
+        <div id="chart_MMD" style="width: 17% !important; height: 100% !important; padding-top: 0px !important;"></div>
+        <!-- style="width: 50%; height: 160px;" class="table table-striped"-->
+    </form>
+
+<!-- </center> -->
+    <!-- style="height: 180px;" -->
+    <!-- <h4 ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 ">Mean Presentation</h4> -->
+    
+        <!-- <span
+        ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0"> m.m.duration:
+        {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__mean_duration}}
+        {{$root.selcetedDataSet.timestamp}}</span></span> -->
+
+    <!-- <span ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && predCtrl.isPredictive">Mean Presentation - Class 1
+    </span><span
+        ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && predCtrl.isPredictive && $root.selcetedDataSet.second_class_name!=''">({{$root.selcetedDataSet.second_class_name}})</span><span
+        ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && predCtrl.isPredictive"> m.m.duration:
+        {{ptirpsPathOfTirps[ptirpsPathOfTirps.length-1]._TIRP__mean_duration_class_1}}
+        {{$root.selcetedDataSet.timestamp}}</span>
+    <div ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && predCtrl.isPredictive"
+        id="timelineClass1"></div> -->
+</div>
+<div id=ptirpsPie ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 " style="padding: 0px !important;padding-top: 2% !important;  ;max-height: 35% !important; max-width: 22% !important; width: 25% !important;">
+        <!-- <h4 ng-show="predCtrl.loaded && !predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && $root.entities.length==0 &&  $root.selcetedDataSet.entities_file_name != 'File does not exist'">loading entities...</h4> -->
+        <h4 ng-show="!predCtrl.loadingNextLevel && ptirpsPathOfTirps.length > 0 && $root.entities.length==0 &&  $root.selcetedDataSet.entities_file_name == 'File does not exist'">no
+            entities file provided</h4>
+        <select id="selectProperty" class="form-control" ng-model="selectedProperty"
+            ng-init="initSelect()" style="width: 80%;height: 4% !important; padding: 2px !important;" ng-change="predCtrl.drawPie()"
+            ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0 && initSelect()">
+            <option value="Select a Property" selected disabled hidden>Select a Property</option> 
+            <option ng-repeat="(header, value) in predCtrl.currentLevel[0]._TIRP__supporting_entities_properties" ng-if="header != 'id'">{{header}}</option>
+        </select>
+        <form name="paies" enctype="multipart/form-data" class="form-inline" style="padding: 0px !important; margin: unset !important;">
+            <div ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0 && ptirpsPathOfTirps[ptirpsPathOfTirps.length - 1]._TIRP__exist_in_class0"
+                id="piechart_predEntitiesProperties" style="width: 50%; height: 25%; padding: 0px !important;"></div>
+            <div ng-show="!predCtrl.loadingNextLevel && predCtrl.loaded && ptirpsPathOfTirps.length > 0 && (ptirpsPathOfTirps[ptirpsPathOfTirps.length - 1]._TIRP__exist_in_class1 || !ptirpsPathOfTirps[ptirpsPathOfTirps.length - 1]._TIRP__exist_in_class0)"
+                id="piechart_predEntitiesPropertiesClass1" style="width: 50%; height: 25%;"></div>
+        </form>
+        </div>
+</div>
